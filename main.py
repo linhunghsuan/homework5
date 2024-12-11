@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
@@ -42,3 +43,27 @@ history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=1
 # 評估模型
 test_loss, test_acc = model.evaluate(X_test, y_test)
 print(f"測試集準確率: {test_acc:.4f}")
+
+# 繪製訓練過程中的損失函數和準確率曲線
+plt.figure(figsize=(12, 5))
+
+# 繪製損失函數
+plt.subplot(1, 2, 1)
+plt.plot(history.history['loss'], label='Train Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Loss Curve')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+# 繪製準確率
+plt.subplot(1, 2, 2)
+plt.plot(history.history['accuracy'], label='Train Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Accuracy Curve')
+plt.xlabel('Epochs')
+plt.ylabel('Accuracy')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
